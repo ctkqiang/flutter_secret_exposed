@@ -1,0 +1,64 @@
+@startuml "类图"
+title Flutter Secret Exposed - 类图
+
+package xin.ctkqiang {
+
+  class FlutterSecretExposed {
+    - APP_NAME: String
+    - AUTHOR: String
+    - VERSION: String
+    - logger: Logger
+    - scanner: Scanner
+    - reader: BufferedReader
+    - fileUtils: FileUtilities
+    + main(args: String[]): void
+    - printWelcomeBanner(): void
+    - printMainMenu(): void
+    - handleApkAnalysis(): void
+    - getInput(prompt: String): String
+    - pauseForEnter(): void
+  }
+
+  package controller {
+    interface AttackPath {
+      + ConvertApkToZip(apkFilePath: String): boolean
+      + ExtractZipFile(zipPath: String, outputDir: String): String
+      + ChangeDirectoryAndListAllEnvFiles(basePath: String): void
+    }
+
+    class FileUtilities {
+      - logger: Logger
+      + ConvertApkToZip(apkFilePath: String): boolean
+      + ExtractZipFile(zipPath: String, outputDir: String): String
+      + ChangeDirectoryAndListAllEnvFiles(basePath: String): void
+    }
+
+    class Logger {
+      - APP_NAME: String
+      - FORMATTER: DateTimeFormatter
+      - CURRENT_USER: String
+      + setCurrentUser(user: String): void
+      + setAppName(appName: String): void
+      + info(message: String): void
+      + warn(message: String): void
+      + error(message: String): void
+    }
+  }
+
+  package constant {
+    class FilePath {
+      + FILE_TYPES: String[]
+      + FILE_PATHS: String[]
+      + FLUTTER_DOTENV: String[]
+    }
+  }
+
+}
+
+FlutterSecretExposed --> FileUtilities
+FlutterSecretExposed --> Logger
+FileUtilities --> AttackPath
+FileUtilities --> Logger
+FileUtilities --> FilePath
+
+@enduml

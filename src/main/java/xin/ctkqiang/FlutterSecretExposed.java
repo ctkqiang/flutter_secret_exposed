@@ -134,7 +134,8 @@ public class FlutterSecretExposed {
     private static String getInput(String prompt) {
         System.out.print((String) prompt);
         try {
-            return (String) reader.readLine().trim();
+            String line = (String) reader.readLine();
+            return (String) (line != null ? line.trim() : "");
         } catch (IOException e) {
             return (String) scanner.nextLine().trim();
         }

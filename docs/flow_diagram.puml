@@ -1,0 +1,51 @@
+@startuml
+title Flutter Secret Exposed - 程序主流程图
+
+start
+
+:显示欢迎横幅;
+
+repeat
+  :显示主菜单;
+  :获取用户选择;
+
+  if (用户选择?) then (1. 扫描 APK) 
+    :处理 APK 分析 (handleApkAnalysis);
+    :获取 APK 文件路径;
+    :清理 APK 路径;
+
+    if (APK 文件路径是否有效?) then (否)
+      :记录错误: 路径不能为空/文件不存在/不是文件;
+    else (是)
+      :获取解压目录 (默认: ./extracted);
+      :记录开始扫描信息;
+
+      :转换 APK 到 ZIP (ConvertApkToZip);
+      if (转换是否成功?) then (否)
+        :记录错误: APK 转换失败;
+      else (是)
+          :解压 ZIP 文件 (ExtractZipFile);
+          if (解压是否成功?) then (否)
+            :记录错误: ZIP 解压失败;
+          else (是)
+            :切换目录并查找 .env 文件 (ChangeDirectoryAndListAllEnvFiles);
+            :记录 APK 扫描完成;
+          endif
+        endif
+        endif
+      endif
+    endif
+  else (2. 退出)
+    :记录退出信息;
+    break
+  else (其他)
+    :记录错误: 无效选择;
+  endif
+
+  :暂停等待用户按 Enter;
+repeat while (用户未选择退出)
+
+:程序结束;
+
+end
+@enduml

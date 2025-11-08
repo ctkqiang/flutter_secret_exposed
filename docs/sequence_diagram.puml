@@ -1,0 +1,57 @@
+@startuml "Flutter Secret Exposed - 序列图"
+title Flutter Secret Exposed - APK 分析流程序列图
+
+actor User as user
+participant "FlutterSecretExposed" as main
+participant "FileUtilities" as fileUtils
+participant "Logger" as logger
+participant "FileSystem" as fs
+
+user -> main: 启动程序
+main -> main: printWelcomeBanner()
+main -> logger: info("法律风险警告")
+
+loop 主循环
+    user -> main: 选择选项1(APK分析)
+    main -> main: handleApkAnalysis()
+    user -> main: 输入APK路径
+    user -> main: 输入输出目录
+    
+    main -> fs: 验证APK文件存在
+    fs --> main: 文件状态
+    
+    alt 文件不存在
+        main -> logger: error("文件不存在")
+    else 文件有效
+        main -> fileUtils: ConvertApkToZip(apkPath)
+        fileUtils -> fs: 复制APK为ZIP
+        fs --> fileUtils: ZIP文件创建
+        fileUtils -> logger: info("转换成功")
+        
+        main -> fileUtils: ExtractZipFile(zipPath, outputDir)
+        fileUtils -> fs: 创建输出目录
+        fileUtils -> fs: 解压ZIP文件
+        loop 遍历ZIP条目
+            fileUtils -> fs: 检查ZIP Slip漏洞
+            fileUtils -> fs: 创建文件/目录
+        end
+        fileUtils -> logger: info("解压完成")
+        fs --> fileUtils: 提取路径
+        
+        main -> fileUtils: ChangeDirectoryAndListAllEnvFiles(extractedPath)
+        fileUtils -> fs: 检查assets/flutter_assets/
+        loop 遍历FLUTTER_DOTENV文件
+            fileUtils -> fs: 检查.env文件存在
+            alt .env文件存在
+                fileUtils -> fs: 读取文件内容
+                fileUtils -> logger: info(文件内容)
+            end
+        end
+        fileUtils -> logger: info("扫描完成")
+    end
+    main -> logger: info("APK扫描完成")
+end
+
+user -> main: 选择选项2(退出)
+main -> logger: info("再见")
+@enduml
