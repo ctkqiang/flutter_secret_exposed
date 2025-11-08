@@ -65,7 +65,7 @@ ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | .env.dev
 ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | ================================================== 
 ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | ENVIRONMENT=develop 
 ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | ENV_TYPE=D 
-ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | APP_NAME="xxxx Coffee Dev" 
+ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | APP_NAME="xxxx xxxx xxxx" 
 ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | BASE_URL=xxxxxxxxxx 
 ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | API_URL_MY=$BASE_URL.com 
 ctkqiang | Flutter 秘密暴露 [info] | 2025-11-08 23:05:23 | APPIER_IS_SANDBOX=true 
